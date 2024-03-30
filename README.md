@@ -10,7 +10,7 @@ Adapted/(Translated) to GO using the **Raylib-go** lib.
 
 ### **What the program does:**
 
-*If all tiles have less that 4 grains of sand the sandpile is stable*
+*If all tiles have less that 4 grains of sand the sandpile is stable.*
 
 *If at least one vertex is unstable.*
 
