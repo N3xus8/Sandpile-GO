@@ -49,7 +49,7 @@ var Palette = [5]raylb.Color{
 // Probably there's a better data structure for this.
 // Basically the map registers the tiles with more than 4 grains of sand.
 // The keys correspond to the index of the tiles on the sandpile.
-var excessMap = make(map[int32]bool)
+var excessMap = make(map[int32]struct{})
 
 // function that return all the keys for a given map
 // Uses Generics
@@ -107,7 +107,7 @@ func draw_sandpile(location Rectangle, sandpile *Sandpile) {
 				if raylb.IsMouseButtonPressed(raylb.MouseButtonLeft) {
 					sandpile.grains[row*sandpile.width+col] += 1
 					if sandpile.grains[row*sandpile.width+col] >= 4 {
-						excessMap[row*sandpile.width+col] = true
+						excessMap[row*sandpile.width+col] = struct{}{}
 					}
 				}
 			}
@@ -158,7 +158,7 @@ func updatePile(sandpile *Sandpile) {
 			index := newRow*sandpile.width + newCol
 			sandpile.grains[index] += 1
 			if sandpile.grains[index] >= 4 {
-				excessMap[int32(index)] = true
+				excessMap[int32(index)] = struct{}{}
 			}
 
 		}
@@ -185,14 +185,14 @@ func main() {
 		Height: WINDOWHEIGHT,
 	}
 
-	const sandpileWidth int32 = 50
-	const sandpileHeight int32 = 50
+	const sandpileWidth int32 = 80
+	const sandpileHeight int32 = 80
 
 	// sandpile struct
 	var sandpile = new(Sandpile)
 	sandpile.width = sandpileWidth
 	sandpile.height = sandpileHeight
-	grains := make([]int32, sandpileWidth*sandpileHeight) // initiliaze the slice
+	grains := make([]int32, sandpileWidth*sandpileHeight) // initialize the slice
 	sandpile.grains = grains
 
 	// Display refresh
@@ -201,8 +201,8 @@ func main() {
 
 	// Set the initial pile of sand at the center
 	initialIndex := sandpileWidth*(sandpileWidth/2) + (sandpileHeight / 2)
-	sandpile.grains[initialIndex] = 870
-	excessMap[initialIndex] = true
+	sandpile.grains[initialIndex] = 2700
+	excessMap[initialIndex] = struct{}{}
 
 	fmt.Printf("Initial sandpile \xE2\x8F\xB3: %v grains on tile No %v", sandpile.grains[initialIndex], initialIndex)
 
